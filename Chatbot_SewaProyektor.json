@@ -1,0 +1,114 @@
+{
+  "name": "Chatbot_SewaProyektor",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6da6cb8e-acd4-42d7-9af1-37ecdcfee5e7",
+      "name": "When chat message received",
+      "webhookId": "8b406990-e56b-4803-bbd3-bba51ec72324"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah AI Customer Service resmi dari \"RentalPro\", unit usaha sewa proyektor dan layar.\nTugasmu adalah membantu pelanggan dengan sopan, ramah, dan jelas terkait:\n1. Paket Harga Sewa (Proyektor Standard 2700 Lumens: Rp150.000/hari, Proyektor High Lumens 4000: Rp350.000/hari, Screen/Layar 70 inch: Rp75.000/hari).\n2. Syarat Sewa (Menjaminkan 1 Kartu Identitas asli seperti E-KTP/SIM).\n3. Layanan Antar-Jemput (Tersedia biaya tambahan sesuai jarak).\nJawablah pertanyaan pengguna secara singkat, padat, dan informatif."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "58bf76d1-b942-4496-81cb-728b568740ab",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        96,
+        208
+      ],
+      "id": "d721ac47-79b4-48d7-9a58-63f21927303e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "pcr01ejTjrym8DYS",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        272,
+        208
+      ],
+      "id": "001a95f6-c21e-4b50-9d19-857193399bb8",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4845cea0-cde1-4b63-9b71-8b45cd33feed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "44L2g0JUL61JlT93",
+  "tags": []
+}
